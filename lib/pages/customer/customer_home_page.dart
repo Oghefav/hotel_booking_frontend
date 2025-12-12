@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking_app/utility/app_colours.dart';
+import 'package:hotel_booking_app/widgets/app_colours.dart';
+import 'package:hotel_booking_app/widgets/bigtext.dart';
+import 'package:hotel_booking_app/widgets/custom_divider.dart';
 
 class CustomerHomePage extends StatelessWidget {
   const CustomerHomePage({super.key});
@@ -7,17 +9,20 @@ class CustomerHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:true,
       backgroundColor: Colors.white,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 30),
-          _appBarSection(),
-          Divider(thickness: 2, color: Colors.grey.shade400),
-          _searchSearch(),
-          _quickFilterSection(),
-          _featuredHoteSection(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 30),
+            _appBarSection(),
+            CustomDivider(),
+            _searchSearch(),
+            _quickFilterSection(),
+            _featuredHoteSection(),
+          ],
+        ),
       ),
     );
   }
@@ -165,15 +170,7 @@ class CustomerHomePage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Quick Filters",
-            style: TextStyle(
-              fontFamily: "Roboto",
-              fontWeight: FontWeight.w800,
-              fontSize: 24,
-              color: Colors.grey.shade900,
-            ),
-          ),
+          Bigtext(text: "Quick Filters"),
           SizedBox(height: 10),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -181,6 +178,7 @@ class CustomerHomePage extends StatelessWidget {
               direction: Axis.horizontal,
               spacing: 10,
               children: [
+                // Use choiceChip after connecting to server
                 _chipBuilder(text: "Popular", color: Colors.blue.shade400),
                 _chipBuilder(text: "Luxury"),
                 _chipBuilder(text: "Boutique"),
@@ -209,15 +207,7 @@ class CustomerHomePage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Featured Hotels",
-            style: TextStyle(
-              fontFamily: "Roboto",
-              fontWeight: FontWeight.w800,
-              fontSize: 24,
-              color: Colors.grey.shade900,
-            ),
-          ),
+          Bigtext(text: "Featured Hotels"),
           SizedBox(height: 10),
           SingleChildScrollView(
             
