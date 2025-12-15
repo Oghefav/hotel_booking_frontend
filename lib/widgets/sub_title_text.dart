@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class SubTitleText extends StatelessWidget {
   final String text;
   final double fontsize;
+   Color color;
 
-  const SubTitleText({super.key, required this.text, this.fontsize = 20});
+   SubTitleText({super.key, required this.text, this.fontsize = 20, Color? color}):color =color ?? const Color(0xFF212121);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class SubTitleText extends StatelessWidget {
         fontSize: fontsize,
         fontFamily: "Roboto",
         fontWeight: FontWeight.w700,
-        color: Colors.grey.shade900,
+        color: color,
       ),
     );
   }

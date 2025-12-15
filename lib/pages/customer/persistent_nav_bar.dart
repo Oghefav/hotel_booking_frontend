@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hotel_booking_app/pages/customer/customer_home_page.dart';
+import 'package:hotel_booking_app/pages/customer/hotel_details_screen.dart';
 import 'package:hotel_booking_app/widgets/app_colours.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
@@ -25,7 +26,7 @@ class _PersistentNavBarState extends State<PersistentNavBar> {
   List<Widget> _buildScreens() {
     return [
       CustomerHomePage(),
-      Container(child: Text("kdjaf")),
+      HotelDetailsScreen(),
       Container(child: Center(child: Text("khgak;"))),
     ];
   }

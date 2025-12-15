@@ -15,13 +15,15 @@ class HotelDetailsScreen extends StatelessWidget {
       body: MediaQuery.removePadding(
         context: context,
         removeBottom: true,
-        removeTop: true,
+        removeTop: true
+        ,
         child: CustomScrollView(
           shrinkWrap: true,
           slivers: [
             SliverAppBar(
               leading: Icon(Icons.arrow_back_ios, color: Colors.grey, weight: 10),
               pinned: true,
+              
               flexibleSpace: FlexibleSpaceBar(
                 title: Bigtext(text: "The Grand Hotel"),
               ),
@@ -47,6 +49,7 @@ class HotelDetailsScreen extends StatelessWidget {
 
   Widget _hotelImageSection() {
     return Container(
+      margin: EdgeInsets.only(right: 10),
       decoration: BoxDecoration(color: AppColours.white),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,

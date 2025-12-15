@@ -10,7 +10,7 @@ class SmallText extends StatelessWidget {
     required this.text,
     this.fontsize = 15,
     Color? color,
-  }) : color = color ?? Colors.grey.shade600;
+  }) : color = color ?? Color(0xFF4A4A4A);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class SmallText extends StatelessWidget {
       style: TextStyle(
         fontSize: fontsize,
         fontFamily: "Roboto",
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
         color: color
       ),
     );
