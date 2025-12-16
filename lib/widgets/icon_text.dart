@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SubTitleText extends StatelessWidget {
+class IconText extends StatelessWidget {
   final String text;
   final double fontsize;
-  Color color;
+  final Color color;
 
-   SubTitleText({super.key, required this.text, this.fontsize = 20, Color? color}):color =color ?? const Color(0xFF212121);
+  IconText({super.key, required this.text, this.fontsize = 15, Color? color})
+    : color = color ?? Color.fromARGB(190, 37, 37, 37);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class SubTitleText extends StatelessWidget {
       style: TextStyle(
         fontSize: fontsize,
         fontFamily: "Roboto",
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w900,
         color: color,
       ),
     );
