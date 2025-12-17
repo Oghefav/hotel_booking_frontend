@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking_app/pages/customer/hotel_listing_screen.dart';
+import 'package:hotel_booking_app/pages/customer/rating_and_review_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: const HotelListingScreen(),
+      home: const RatingAndReviewScreen(),
     );
   }
 }

@@ -210,15 +210,16 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
                               text: "₦${hotelList[index].price.toInt()}",
                               color: Colors.lightBlue.shade300
                             ),
-                            SmallText(text: "/night"),
+                            SubTitleText(text: "/night", fontsize: 17, color: Colors.grey.shade600),
                           ],
                         ),
                         Row(
                           children: [
                             Icon(Icons.people_alt_outlined),
-                            SmallText(
+                            SubTitleText(
                               text:
                                   "Up to ${hotelList[index].guestsMax} guests",
+                                  fontsize: 15, color: Colors.grey.shade600
                             ),
                           ],
                         ),
