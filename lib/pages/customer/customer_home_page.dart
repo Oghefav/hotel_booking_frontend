@@ -36,17 +36,14 @@ class CustomerHomePage extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Colors.blue.shade500,
+              color: const Color.fromARGB(255, 92, 164, 222),
             ),
             child: Center(
-              child: IconButton(
-                iconSize: 30,
-                onPressed: () {},
-                icon: Icon(
+              child: Icon(
                   Icons.apartment_outlined,
                   color: Colors.grey.shade200,
                 ),
-              ),
+              
             ),
           ),
           SizedBox(

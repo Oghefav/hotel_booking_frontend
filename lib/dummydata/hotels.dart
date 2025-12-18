@@ -1,3 +1,4 @@
+import 'package:hotel_booking_app/model/booking_model.dart';
 import 'package:hotel_booking_app/model/hotel_model.dart';
 
 List<HotelModel> hotels = [
@@ -60,5 +61,20 @@ List<HotelModel> hotels = [
     guestsMax: 4,
     avgRating: 4.3,
     image: 'assets/images/hotel6.jpg',
+  ),
+];
+
+List<BookingModel> bookings = [
+  BookingModel(
+    checkInDate: DateTime(2024, 7, 20),
+    checkOutDate: DateTime(2024, 7, 25),hotelName: 'The Grand Regal Hotel', roomType: 'Deluxe Suite', bookingStatus: 'Confirmed', roomImage: 'assets/images/room1.avif',
+  ),
+  BookingModel(
+    checkInDate: DateTime(2024, 8, 5),
+    checkOutDate: DateTime(2024, 8, 10), hotelName: 'Boutique Stay', roomType: 'Standard Room', bookingStatus: 'Pending', roomImage: 'assets/images/room2.jpg',
+  ),
+  BookingModel(hotelName: 'City View Inn', roomType: 'Executive Room', checkInDate: DateTime(2024, 9, 15), checkOutDate: DateTime(2024, 9, 20), bookingStatus: 'Cancelled', roomImage: 'assets/images/room3.jpg',
+  ),
+  BookingModel(hotelName: 'Mountain Retreat', roomType: 'Family Suite', checkInDate: DateTime(2024, 10, 1), checkOutDate: DateTime(2024, 10, 6), bookingStatus: 'Completed', roomImage: 'assets/images/room4.jpg',
   ),
 ];
