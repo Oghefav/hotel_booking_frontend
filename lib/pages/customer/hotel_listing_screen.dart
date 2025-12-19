@@ -6,7 +6,6 @@ import 'package:hotel_booking_app/widgets/app_colours.dart';
 import 'package:hotel_booking_app/widgets/bigtext.dart';
 import 'package:hotel_booking_app/widgets/custom_divider.dart';
 import 'package:hotel_booking_app/widgets/icon_text.dart';
-import 'package:hotel_booking_app/widgets/small_text.dart';
 import 'package:hotel_booking_app/widgets/sub_title_text.dart';
 
 class HotelListingScreen extends StatefulWidget {

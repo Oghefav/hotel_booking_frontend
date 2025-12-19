@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Bigtext extends StatelessWidget {
-  String text;
-  double fontsize;
-  Color color;
+  final String text;
+  final double fontsize;
+  final Color color;
 
-  Bigtext({super.key, required this.text, this.fontsize = 24, Color? color})
+  const Bigtext({super.key, required this.text, this.fontsize = 24, Color? color})
     : color = color ?? Colors.black;
 
   @override

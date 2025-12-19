@@ -5,12 +5,12 @@ class SmallText extends StatelessWidget {
   final double fontsize;
   final Color color;
 
-  SmallText({
+  const SmallText({
     super.key,
     required this.text,
     this.fontsize = 15,
     Color? color,
-  }) : color = color ?? Color(0xFF4A4A4A);
+  }) : color = color ?? const Color(0xFF4A4A4A);
 
   @override
   Widget build(BuildContext context) {
