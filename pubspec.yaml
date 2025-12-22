@@ -67,6 +67,15 @@ flutter:
   assets:
    - assets/images/
 
+  fonts:
+   - family: Montserrat
+     fonts:
+       - asset: assets/fonts/Montserrat-Bold.ttf 
+         weight: 800
+       - asset: assets/fonts/Montserrat-Black.ttf
+         weight: 900
+
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

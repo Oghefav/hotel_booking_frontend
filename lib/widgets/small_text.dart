@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SmallText extends StatelessWidget {
-    final String text;
+  final String text;
   final double fontsize;
   final Color color;
 

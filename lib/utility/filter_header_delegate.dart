@@ -5,7 +5,7 @@ class FilterHeaderDelegate extends SliverPersistentHeaderDelegate {
   final Widget child;
   final double height;
 
-  FilterHeaderDelegate({required this.child, this.height = 90});
+  FilterHeaderDelegate({required this.child, required this.height});
 
   @override
   double get minExtent => height;

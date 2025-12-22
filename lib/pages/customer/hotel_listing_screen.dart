@@ -53,6 +53,7 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
           SliverPersistentHeader(
             pinned: true,
             delegate: FilterHeaderDelegate(
+              height: 90,
               child: _filterAndMapviewIconsSection(),
             ),
           ),
