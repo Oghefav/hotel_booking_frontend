@@ -13,8 +13,7 @@ class SubTitleText extends StatelessWidget {
       text,
       style: TextStyle(
         fontSize: fontsize,
-        fontFamily: "Roboto",
-        fontWeight: FontWeight.w700,
+        fontFamily: "Montserrat",
         color: color,
       ),
     );
