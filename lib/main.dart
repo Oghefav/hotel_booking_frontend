@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking_app/pages/customer/check_out_screen.dart';
-// import 'package:hotel_booking_app/pages/customer/register_screen.dart';
+import 'package:hotel_booking_app/pages/customer/booking_confirmation_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: const CheckOutScreen(),
+      home: const BookingConfirmationScreen(),
     );
   }
 }
