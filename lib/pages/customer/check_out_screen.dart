@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hotel_booking_app/utility/card_number_input_formater.dart';
 import 'package:hotel_booking_app/utility/date_input_formatter.dart';
 import 'package:hotel_booking_app/utility/filter_header_delegate.dart';
 import 'package:hotel_booking_app/widgets/app_colours.dart';
+import 'package:hotel_booking_app/widgets/custom_app_bar.dart';
 import 'package:hotel_booking_app/widgets/custom_divider.dart';
 import 'package:hotel_booking_app/widgets/small_text.dart';
 import 'package:hotel_booking_app/widgets/sub_title_text.dart';
@@ -21,61 +23,29 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColours.white,
       body: CustomScrollView(
         slivers: [
           SliverPersistentHeader(
-            delegate: FilterHeaderDelegate(child: _appbarSection(), height: 85),
+            delegate: FilterHeaderDelegate(child: const CustomAppBar(title: "Checkout"), height: 85.h),
+            pinned: true,
           ),
           SliverList(
             delegate: SliverChildListDelegate([
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 15.w),
                 child: Column(
                   children: [
                     _orderSummarySection(),
-                    SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     _paymentMethodSection(),
                   ],
                 ),
               ),
-              SizedBox(height: 30),
-              // CustomDivider(),
-              SizedBox(height: 15),
+              SizedBox(height: 15.h),
               _submitButton(),
             ]),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _appbarSection() {
-    return Container(
-      color: Colors.white,
-      margin: EdgeInsets.only(top: 20),
-
-      child: Column(
-        children: [
-          Row(
-            children: [
-              SizedBox(width: 10),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.arrow_back_ios_new_outlined),
-              ),
-              SizedBox(width: 5),
-              Text(
-                "Checkout",
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-          CustomDivider(),
         ],
       ),
     );
@@ -85,12 +55,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     return Card(
       color: Colors.white,
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(12.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SubTitleText(text: "Order Summary"),
-            SizedBox(height: 10),
+            SizedBox(height: 8.h),
             _orderDetailBuilder(title: "Subtotal", detail: "₦30000.00"),
             _orderDetailBuilder(
               title: "Discounts",
@@ -98,20 +68,20 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               color: Colors.redAccent,
             ),
             _orderDetailBuilder(title: "Service  Fee", detail: "₦150.00"),
-            SizedBox(height: 10),
+            SizedBox(height: 8.h),
             CustomDivider(),
-            SizedBox(height: 10),
+            SizedBox(height: 8.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SubTitleText(
                   text: "Total",
-                  fontsize: 18,
+                  fontsize: 12.sp,
                   color: Colors.lightBlueAccent,
                 ),
                 SubTitleText(
                   text: "₦28650.00",
-                  fontsize: 18,
+                  fontsize: 12.sp,
                   color: Colors.lightBlueAccent,
                 ),
               ],
@@ -128,7 +98,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     Color? color,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: EdgeInsets.symmetric(vertical: 5.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -144,7 +114,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SubTitleText(text: "Payment Method"),
-        SizedBox(height: 10),
+        SizedBox(height: 8.h),
         GestureDetector(
           onTap: () => onPaymentMethodSelected(paymentMethods[0]),
           child: _paymentMethodBuilder(paymentMethods[0]),
@@ -153,7 +123,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           onTap: () => onPaymentMethodSelected(paymentMethods[1]),
           child: _paymentMethodBuilder(paymentMethods[1]),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 9.h),
         if (selectedPaymentMethod == null)
           SizedBox()
         else if (selectedPaymentMethod == paymentMethods[0])
@@ -175,10 +145,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             selectedPaymentMethod == paymentMethod
                 ? BorderSide(color: Color(0xFF33C1FF))
                 : BorderSide.none,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8.r),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(10.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -190,7 +160,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       : Icons.account_balance_wallet_outlined,
                   color: Colors.lightBlueAccent,
                 ),
-                SizedBox(width: 10),
+                SizedBox(width: 8.w),
                 SmallText(text: paymentMethod),
               ],
             ),
@@ -208,24 +178,24 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SubTitleText(text: "Card Details"),
-        SizedBox(height: 5),
+        SizedBox(height: 5.h),
         _buildCardNumberfield(),
-        SizedBox(height: 5),
+        SizedBox(height: 5.h),
         Row(
           children: [
             _buildExpiryField(),
-            SizedBox(width: 10),
+            SizedBox(width: 10.w),
             _buildCvcField(),
           ],
         ),
         Row(
           children: [
-            Icon(Icons.lock_outline, color: Colors.grey.shade700, size: 15),
+            Icon(Icons.lock_outline, color: Colors.grey.shade700, size: 10.sp),
 
-            SizedBox(width: 5),
+            SizedBox(width: 5.w),
             SmallText(
               text: "Your payment information is securely encryted.",
-              fontsize: 13,
+              fontsize: 9.sp,
             ),
           ],
         ),
@@ -239,10 +209,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       children: [
         SmallText(
           text: "Card Number",
-          fontsize: 16,
+          fontsize: 12.sp,
           color: Colors.grey.shade900,
         ),
-        SizedBox(height: 5),
+        SizedBox(height: 4.h),
         TextField(
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
@@ -269,10 +239,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         children: [
           SmallText(
             text: "Expiry Date",
-            fontsize: 16,
+            fontsize: 12.sp,
             color: Colors.grey.shade900,
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 4.h),
           TextField(
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
@@ -298,8 +268,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SmallText(text: "CVV", fontsize: 16, color: Colors.grey.shade900),
-          SizedBox(height: 5),
+          SmallText(text: "CVV", fontsize: 12.sp, color: Colors.grey.shade900),
+          SizedBox(height: 4.h),
           TextField(
             keyboardType: TextInputType.number,
             maxLength: 3,
@@ -322,24 +292,24 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SubTitleText(text: "Bank Transfer"),
-        SizedBox(height: 5),
+        SizedBox(height: 4.h),
         SmallText(
           text: "Make Transfer to the account details provided.",
-          fontsize: 13,
+          fontsize: 9.sp,
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 9.h),
         _buildbankDetails(),
-        SizedBox(width: 10),
+        SizedBox(width: 9.h),
         Center(
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.info_outline, color: Colors.lightBlueAccent, size: 15),
-              SizedBox(width: 5),
+              Icon(Icons.info_outline, color: Colors.lightBlueAccent, size: 10.sp),
+              SizedBox(width: 4.w),
               SmallText(
                 text: "Only confirm if you have made transfer.",
                 color: Colors.lightBlueAccent,
-                fontsize: 13,
+                fontsize: 10.sp,
               ),
             ],
           ),

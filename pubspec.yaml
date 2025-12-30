@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   persistent_bottom_nav_bar: ^6.2.1
   dots_indicator: ^4.0.1
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,10 @@ flutter:
          weight: 800
        - asset: assets/fonts/Montserrat-Black.ttf
          weight: 900
+       - asset: assets/fonts/Montserrat-Regular.ttf
+         weight: 200
+       - asset: assets/fonts/Montserrat-Medium.ttf
+         weight: 300
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

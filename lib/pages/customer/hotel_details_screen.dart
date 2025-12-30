@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hotel_booking_app/utility/filter_header_delegate.dart';
 import 'package:hotel_booking_app/widgets/app_colours.dart';
 import 'package:hotel_booking_app/widgets/bigtext.dart';
+import 'package:hotel_booking_app/widgets/custom_app_bar.dart';
 import 'package:hotel_booking_app/widgets/custom_divider.dart';
 import 'package:hotel_booking_app/widgets/small_text.dart';
 import 'package:hotel_booking_app/widgets/sub_title_text.dart';
@@ -12,6 +15,7 @@ class HotelDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColours.white,
       body: MediaQuery.removePadding(
         context: context,
         removeBottom: true,
@@ -20,25 +24,18 @@ class HotelDetailsScreen extends StatelessWidget {
         child: CustomScrollView(
           shrinkWrap: true,
           slivers: [
-            SliverAppBar(
-              leading: Icon(Icons.arrow_back_ios, color: Colors.grey, weight: 10),
-              pinned: true,
-              
-              flexibleSpace: FlexibleSpaceBar(
-                title: Bigtext(text: "The Grand Hotel"),
-              ),
-            ),
+            SliverPersistentHeader(delegate: FilterHeaderDelegate(child: CustomAppBar(title: "The Grand Hotel"), height: 80.sp), pinned: true,),
             SliverList(
               delegate: SliverChildListDelegate([
                 _hotelImageSection(),
                 _descriptionSection(),
                 _avaliableRoomSection(),
                 _reviewSection(),
-                SizedBox(height: 15,),
+                SizedBox(height: 13.h,),
                 CustomDivider(),
-                SizedBox(height: 10,),
+                SizedBox(height: 8.h,),
                 _viewRoomSection(),
-                SizedBox(height: 30,),
+                SizedBox(height: 25.h,),
               ]),
             ),
           ],
@@ -49,21 +46,21 @@ class HotelDetailsScreen extends StatelessWidget {
 
   Widget _hotelImageSection() {
     return Container(
-      margin: EdgeInsets.only(right: 10),
-      decoration: BoxDecoration(color: AppColours.white),
+      margin: EdgeInsets.only(left: 4.w, right: 12.w),
+      decoration: BoxDecoration(color: Colors.white),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Wrap(
           direction: Axis.horizontal,
           children: List.generate(3, ((int index) {
             return Container(
-              margin: EdgeInsets.only(left: 20, top: 10, bottom: 10),
+              padding: EdgeInsets.only(left: 13.w, top: 8.h, bottom: 8.h),
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: BorderRadius.all(Radius.circular(10.r)),
                 child: Image.asset(
                   "assets/images/hotel2.webp",
-                  height: 210,
-                  width: 300,
+                  height: 185.h,
+                  width: 250.w,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -76,7 +73,7 @@ class HotelDetailsScreen extends StatelessWidget {
 
   Widget _descriptionSection() {
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(18.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -85,8 +82,8 @@ class HotelDetailsScreen extends StatelessWidget {
             children: [
               Icon(
                 Icons.location_on_outlined,
-                color: Colors.blue.shade400,
-                size: 18,
+                color: Colors.lightBlue,
+                size: 14.sp,
               ),
               SmallText(text: "123 Onuiyi Street, Nsukka"),
             ],
@@ -94,32 +91,28 @@ class HotelDetailsScreen extends StatelessWidget {
           SizedBox(height: 2),
           Row(
             children: [
-              Icon(Icons.star_outline, color: Colors.blue.shade400, size: 18),
-              Text(
-                "4.8 (120 Reviews)",
-                style: TextStyle(
-                  color: Colors.blue.shade500,
-                  fontFamily: "Roboto",
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
-                ),
+              Icon(Icons.star_outline, color: Colors.lightBlue, size: 14.sp),
+              SmallText(
+                text:  "4.8 (120 Reviews)", color: Colors.lightBlue,
               ),
             ],
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 10.h),
           SubTitleText(text: "Description"),
           Wrap(
             children: [
               SmallText(
                 text:
                     "Experience unparalled luxury at The Grand Hotel, a landmark of sophisatication located in the heart of Nsukka. Boasting breathtaking views of the city skyline and the tranquil ocean, our hotel offers and exquiste blend of classic elegance and modern comfort. Each room is meticulously designed with plusd furnishings and state-of-the-art amenities to ensure a memeroble stay, indulge in our world-class dining, rejuvenate at our spa, or unwind by the pristine poolside. The Grand Hotel is more than just a place to stay; it's an experience.",
+                    fontsize: 7.sp,
               ),
             ],
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 8.h),
           SubTitleText(text: "Amentites"),
           Wrap(
             // modify after connecting to server
+            spacing: 4.h,
             children: [
               _chipBuilder("Free Wi-fi"),
               _chipBuilder("Free Parking"),
@@ -137,53 +130,53 @@ class HotelDetailsScreen extends StatelessWidget {
   Widget _chipBuilder(String text) {
     return Chip(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15.r),
         side: BorderSide(color: AppColours.white),
       ),
       shadowColor: Colors.transparent,
       backgroundColor: Color(0x66ECEFF1),
-      label: SmallText(text: text, color: Colors.black),
+      label: SmallText(text: text, fontsize: 7.sp,),
     );
   }
 
   Widget _avaliableRoomSection() {
     return Padding(
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.all(20.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SubTitleText(text: "Available Rooms"),
-          SizedBox(height: 10),
+          SizedBox(height: 8.h),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Wrap(
-              spacing: 15,
+              spacing: 13.w,
               direction: Axis.horizontal,
               children: List.generate(3, (index) {
                 return Container(
-                  height: 220,
-                  width: 200,
+                  height: 215.h,
+                  width: 200.w,
                   decoration: BoxDecoration(
-                    color: AppColours.white,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10.r)),
                   ),
                   child: Column(
                     children: [
                       SizedBox(
                         child: ClipRRect(
                           borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(10),
+                            top: Radius.circular(8.r),
                           ),
                           child: Image.asset(
                             "assets/images/room1.avif",
-                            height: 130,
-                            width: 200,
+                            height: 130.h,
+                            width: 200.w,
                             fit: BoxFit.fill,
                           ),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(5.h),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -194,23 +187,22 @@ class HotelDetailsScreen extends StatelessWidget {
 
                             SmallText(
                               text: "₦25000/Night",
-                              color: Colors.blue.shade400,
+                              color: Colors.lightBlue,
                             ),
-                            SizedBox(height: 5),
+                            SizedBox(height: 4.h),
                             Container(
-                              width: 180,
-                              height: 30,
+                              width: 200.w,
+                              height: 30.h,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(
-                                  Radius.circular(5),
+                                  Radius.circular(5.r),
                                 ),
-                                color: Colors.blue.shade400,
+                                color: Colors.lightBlue,
                               ),
                               child: Center(
                                 child: SmallText(
                                   text: "View Details",
                                   color: AppColours.white,
-                                  fontsize: 13,
                                 ),
                               ),
                             ),
@@ -230,10 +222,10 @@ class HotelDetailsScreen extends StatelessWidget {
 
   Widget _reviewSection() {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: EdgeInsets.symmetric(horizontal: 14.w),
       color: AppColours.white,
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(10.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -245,13 +237,14 @@ class HotelDetailsScreen extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.star_outline,
-                      color: Colors.blue.shade400,
-                      size: 18,
+                      color: Colors.lightBlue,
+                      size: 15.sp,
                     ),
+                    SizedBox(width: 2.w,),
                     SmallText(
                       text: "4.8/5",
-                      fontsize: 12,
-                      color: Colors.blue.shade400,
+                      fontsize: 9.sp,
+                      color: Colors.lightBlue,
                     ),
                   ],
                 ),
@@ -262,27 +255,28 @@ class HotelDetailsScreen extends StatelessWidget {
                 SmallText(
                   text:
                       "Based on 120 guests reviews, guest consistently praise our comfortable rooms and excellent service",
+                      fontsize: 7.sp,
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             Container(
-              width: 350,
-              height: 30,
+              width: 300.w,
+              height: 32.h,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey, width: 0.5),
+                border: Border.all(color: Colors.grey, width: 1.w),
                 borderRadius: BorderRadius.all(Radius.circular(5)),
-                color: Color(0x66ECEFF1),
+                color: AppColours.white,
               ),
               child: Row(
                 children: [
                   SizedBox(width: 100),
-                  Icon(CupertinoIcons.square_pencil, color: Colors.black),
+                  Icon(CupertinoIcons.square_pencil, color: Colors.grey.shade700),
                   SizedBox(width: 5),
                   SmallText(
                     text: "Write a Review",
-                    color: Colors.black,
-                    fontsize: 13,
+                    // color: Colors.black,
+                    fontsize: 8.sp,
                   ),
                 ],
               ),
@@ -295,17 +289,16 @@ class HotelDetailsScreen extends StatelessWidget {
 
   Widget _viewRoomSection() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 15.w),
       child: Container(
-        width: 300,
-        height: 30,
+        width: 300.w,
+        height: 34.h,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: 0.5),
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          color: Colors.blue.shade400,
+          borderRadius: BorderRadius.all(Radius.circular(5.r)),
+          color: Colors.lightBlue,
         ),
         child: Center(
-          child: SmallText(text: "View Rooms", color: AppColours.white, fontsize: 13),
+          child: SmallText(text: "View Rooms", color: AppColours.white, ),
         )
           
       ),

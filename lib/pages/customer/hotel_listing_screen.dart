@@ -1,4 +1,8 @@
+import 'dart:ffi';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hotel_booking_app/dummydata/hotels.dart';
 import 'package:hotel_booking_app/model/hotel_model.dart';
 import 'package:hotel_booking_app/utility/filter_header_delegate.dart';
@@ -6,6 +10,7 @@ import 'package:hotel_booking_app/widgets/app_colours.dart';
 import 'package:hotel_booking_app/widgets/bigtext.dart';
 import 'package:hotel_booking_app/widgets/custom_divider.dart';
 import 'package:hotel_booking_app/widgets/icon_text.dart';
+import 'package:hotel_booking_app/widgets/small_text.dart';
 import 'package:hotel_booking_app/widgets/sub_title_text.dart';
 
 class HotelListingScreen extends StatefulWidget {
@@ -40,20 +45,13 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColours.white,
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            pinned: true,
-            title: SubTitleText(text: "Hotel Listing"),
-            actionsPadding: EdgeInsets.only(right: 20),
-            leading: Icon(Icons.arrow_back_ios, color: Colors.grey.shade600),
-            actions: [Icon(Icons.menu)],
-          ),
           SliverPersistentHeader(
             pinned: true,
             delegate: FilterHeaderDelegate(
-              height: 90,
+              height: 147.h,
               child: _filterAndMapviewIconsSection(),
             ),
           ),
@@ -67,17 +65,30 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 25.h,),
+        Padding(
+          padding: EdgeInsets.only(left: 12.w, right: 12.w, top: 10.h, bottom: 2.h),
+          child: Row(children: [
+            SizedBox(width: 8.w),
+            Icon(Icons.arrow_back_ios, color: Colors.grey.shade600),
+            SizedBox(width: 8.w),
+            SubTitleText(text: "Hotel Listing"),
+            SizedBox(width: 120.w),
+            Icon(Icons.menu),
+          ],),
+        ),
         CustomDivider(),
         Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 2),
+          padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 3.h, bottom: 1.h),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _filterAndMapViewIconBuilder(Icons.tune, "Filter & Sort", 140),
-              _filterAndMapViewIconBuilder(Icons.map_outlined, "Map View", 120),
+              _filterAndMapViewIconBuilder(Icons.tune, "Filter & Sort", 105.w),
+              _filterAndMapViewIconBuilder(Icons.map_outlined, "Map View", 90.w),
             ],
           ),
         ),
+        SizedBox(height: 3.h,),
         CustomDivider(),
       ],
     );
@@ -89,18 +100,18 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
     double width,
   ) {
     return Container(
-      height: 50,
+      height: 40.h,
       width: width,
       decoration: BoxDecoration(
-        border: Border.all(width: 1.2, color: Colors.grey.shade400),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        border: Border.all(width: 1.2.w, color: Colors.grey.shade400),
+        borderRadius: BorderRadius.all(Radius.circular(10.r)),
       ),
       child: Center(
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(iconData, color: Color.fromARGB(190, 37, 37, 37)),
-            SizedBox(width: 5),
+            SizedBox(width: 4.w),
             IconText(text: text),
           ],
         ),
@@ -113,8 +124,8 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
       delegate: SliverChildBuilderDelegate((context, index) {
         var features = hotelList[index].features;
         return Card(
-          margin: EdgeInsets.only(bottom: 15, right: 20, left: 20, top: 10),
-          color: AppColours.white,
+          margin: EdgeInsets.only(bottom: 13.h, right: 15.w, left: 15.h, top: 8.h),
+          color: Colors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -122,38 +133,38 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
+                      topLeft: Radius.circular(13.r),
+                      topRight: Radius.circular(13.r),
                     ),
                     child: Image.asset(
                       hotelList[index].image,
                       width: double.maxFinite,
-                      height: 200,
+                      height: 180.h,
                       fit: BoxFit.cover,
                     ),
                   ),
                   Positioned(
-                    right: 10,
-                    top: 10,
+                    right: 8.w,
+                    top: 8.h,
                     child: Container(
-                      height: 50,
-                      width: 50,
+                      height: 40.h,
+                      width: 33.w,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(35.r),
                         color: const Color.fromARGB(199, 165, 162, 162),
                       ),
-                      child: Icon(Icons.favorite_border_outlined, size: 27),
+                      child: Icon(Icons.favorite_border_outlined, size: 20.sp),
                     ),
                   ),
                   Positioned(
-                    left: 10,
-                    bottom: 10,
+                    left: 8.w,
+                    bottom: 8.h,
                     child: Container(
-                      height: 30,
-                      width: 70,
+                      height: 25.h,
+                      width: 50.w,
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(160, 11, 11, 11),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(18.r),
                       ),
                       child: Center(
                         child: Row(
@@ -162,13 +173,12 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
                             Icon(
                               Icons.star_outline,
                               color: const Color.fromARGB(255, 230, 182, 6),
-                              size: 18,
+                              size: 14.sp,
                             ),
                             SizedBox(width: 5),
-                            Bigtext(
+                            SmallText(
                               text: "${hotelList[index].avgRating}",
                               color: AppColours.white,
-                              fontsize: 18,
                             ),
                           ],
                         ),
@@ -178,7 +188,7 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.all(13.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -186,52 +196,50 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
                       text: hotelList[index].name,
                       color: const Color.fromARGB(230, 15, 3, 3),
                     ),
-                    SizedBox(height: 5),
+                    SizedBox(height: 4.h),
                     Row(
                       children: [
                         Icon(
                           Icons.location_on_outlined,
                           color: Colors.grey.shade700,
                         ),
-                        SubTitleText(
+                        SmallText(
                           text:
-                              '${hotelList[index].city}, ${hotelList[index].country}',
-                          fontsize: 17, color: Colors.grey.shade600,
+                              '${hotelList[index].city}, ${hotelList[index].country}', color: Colors.grey.shade600,
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    SizedBox(height: 4.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
-                            Bigtext(
+                            SubTitleText(
                               text: "₦${hotelList[index].price.toInt()}",
-                              color: Colors.lightBlue.shade300
+                              color: Colors.lightBlue
                             ),
-                            SubTitleText(text: "/night", fontsize: 17, color: Colors.grey.shade600),
+                            SmallText(text: "/night", color: Colors.grey.shade600),
                           ],
                         ),
                         Row(
                           children: [
                             Icon(Icons.people_alt_outlined),
-                            SubTitleText(
+                            SmallText(
                               text:
-                                  "Up to ${hotelList[index].guestsMax} guests",
-                                  fontsize: 15, color: Colors.grey.shade600
+                                  "Up to ${hotelList[index].guestsMax} guests", color: Colors.grey.shade600
                             ),
                           ],
                         ),
                       ],
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 4.h,),
                     Wrap(
-                      spacing: 10,
+                      spacing: 7.w,
                       children: List.generate(features.length, (index) {
                         return Chip(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(18.r),
                             side: BorderSide(color: AppColours.white),
                           ),
                           backgroundColor: Color.fromARGB(100, 212, 217, 220),
