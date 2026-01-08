@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hotel_booking_app/pages/common/login_screen.dart';
 import 'package:hotel_booking_app/pages/customer/hotel_listing_screen.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
-          home: const HotelListingScreen(),
+          home: const LoginScreen(),
         );
       }
     );

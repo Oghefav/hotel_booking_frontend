@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hotel_booking_app/pages/customer/customer_home_page.dart';
 import 'package:hotel_booking_app/pages/customer/hotel_details_screen.dart';
+import 'package:hotel_booking_app/pages/customer/profile_and_booking_screen.dart';
 import 'package:hotel_booking_app/widgets/app_colours.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
@@ -27,7 +29,7 @@ class _PersistentNavBarState extends State<PersistentNavBar> {
     return [
       CustomerHomePage(),
       HotelDetailsScreen(),
-      Container(child: Center(child: Text("khgak;"))),
+      ProfileAndBookingScreen(),
     ];
   }
 
@@ -46,15 +48,15 @@ class _PersistentNavBarState extends State<PersistentNavBar> {
                 inactiveColorPrimary: CupertinoColors.systemGrey,
             ),
             PersistentBottomNavBarItem(
-                icon: Icon(CupertinoIcons.settings),
+                icon: Icon(Icons.account_balance),
                 title: ("Bookings"),
                 activeColorPrimary: CupertinoColors.activeBlue,
                 inactiveColorPrimary: CupertinoColors.systemGrey,
                 
             ),
             PersistentBottomNavBarItem(
-                icon: Icon(CupertinoIcons.settings),
-                title: ("Bookings"),
+                icon: Icon(Icons.person_outline),
+                title: ("Account"),
                 activeColorPrimary: CupertinoColors.activeBlue,
                 inactiveColorPrimary: CupertinoColors.systemGrey,
                 
@@ -76,7 +78,7 @@ class _PersistentNavBarState extends State<PersistentNavBar> {
       stateManagement: true, // Default is true.
       hideNavigationBarWhenKeyboardAppears: true,
       popBehaviorOnSelectedNavBarItemPress: PopBehavior.all,
-      padding: const EdgeInsets.only(top: 8),
+      padding: EdgeInsets.only(top: 6.h),
       backgroundColor: AppColours.white,
       isVisible: true,
       animationSettings: const NavBarAnimationSettings(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hotel_booking_app/utility/filter_header_delegate.dart';
 import 'package:hotel_booking_app/widgets/app_colours.dart';
 import 'package:hotel_booking_app/widgets/small_text.dart';
@@ -10,23 +11,23 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColours.white,
       body: CustomScrollView(
         slivers: [
           SliverPersistentHeader(
             pinned: true,
             delegate: FilterHeaderDelegate(
-              height: 120,
+              height: 115.h,
               child: Container(
                 color: Colors.white,
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(top: 30),
+                      padding: EdgeInsets.only(top: 28.h),
                       child: Text(
                         "Create Your Account",
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 20.sp,
                           fontFamily: "Montserrat",
                           fontWeight: FontWeight.w800,
                           color: const Color.fromARGB(230, 20, 2, 2),
@@ -34,10 +35,9 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 5),
+                      padding: EdgeInsets.only(top: 4.h),
                       child: SmallText(
                         text: 'Start your hotel journey with us.',
-                        fontsize: 18,
                         color: Colors.grey.shade600,
                       ),
                     ),
@@ -50,6 +50,7 @@ class RegisterScreen extends StatelessWidget {
           SliverList(
             delegate: SliverChildListDelegate([
               _textFieldSection(),
+              SizedBox(height: 20.h,),
               _oauthSection(),
               _sigupBottomAtermSection(),
             ]),
@@ -61,7 +62,7 @@ class RegisterScreen extends StatelessWidget {
 
   Widget _textFieldSection() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -70,33 +71,33 @@ class RegisterScreen extends StatelessWidget {
             labelText: "First Name",
             icon: Icons.person_outline,
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 14.h),
           _textFieldBuilder(
             hintText: "Doe",
             labelText: "Last Name",
             icon: Icons.person_2_outlined,
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 14.h),
           _textFieldBuilder(
             hintText: "johndoe@example.com",
             labelText: "Email",
             icon: Icons.message_outlined,
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 14.h),
           _textFieldBuilder(
             hintText: "08088173983",
             labelText: "Phone Number",
             icon: Icons.phone_outlined,
             keyboardtype: TextInputType.phone,
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 14.h),
           _textFieldBuilder(
             hintText: "********",
             labelText: "Password",
             icon: Icons.lock_outline,
             isObscure: true,
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 14.h),
           _textFieldBuilder(
             hintText: "********",
             labelText: "Confirm Password",
@@ -120,15 +121,15 @@ class RegisterScreen extends StatelessWidget {
       children: [
         SubTitleText(
           text: labelText,
-          fontsize: 16,
+          fontsize: 11.sp,
           color: Colors.grey.shade800,
         ),
-        SizedBox(height: 5),
+        SizedBox(height: 4.h),
         Container(
-          height: 40,
+          height: 38.h,
           decoration: BoxDecoration(
             color: Colors.grey.shade200,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(8.r),
             border: Border.all(color: Colors.grey.shade300),
           ),
           child: TextField(
@@ -148,30 +149,31 @@ class RegisterScreen extends StatelessWidget {
 
   Widget _oauthSection() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.symmetric(horizontal: 13.h),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Container(
-                  height: 1,
-                  width: 100,
-                  color: Colors.grey.shade300,
+          Padding(
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 5.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 1.h,
+                    color: Colors.grey.shade100,
+                  ),
                 ),
-              ),
-              SmallText(text: "  Or continue with  ", fontsize: 16),
-              Expanded(
-                child: Container(
-                  height: 1,
-                  width: 100,
-                  color: Colors.grey.shade300,
+                SmallText(text: "  Or sign with  ", ),
+                Expanded(
+                  child: Container(
+                    height: 1.h,
+                    color: Colors.grey.shade100,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 35.h),
           _oAuthBuilder(
             'Continue with Google',
             'assets/images/google_icon.webp',
@@ -188,17 +190,17 @@ class RegisterScreen extends StatelessWidget {
 
   Widget _oAuthBuilder(String text, String image) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      height: 50,
+      margin: EdgeInsets.symmetric(horizontal: 4.h),
+      height: 45.h,
       width: double.maxFinite,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8.r),
         color: AppColours.white,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade200,
-            blurRadius: 5,
-            offset: Offset(0, 3),
+            blurRadius: 4.r,
+            offset: Offset(0, 2.h),
           ),
         ],
         border: Border.all(color: Colors.grey.shade300),
@@ -207,11 +209,11 @@ class RegisterScreen extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(image, height: 30, width: 30),
-            SizedBox(width: 10),
+            Image.asset(image, height: 28.h, width: 25.w),
+            SizedBox(width: 7.w),
             SubTitleText(
               text: text,
-              fontsize: 15,
+              fontsize: 11.sp,
               color: const Color.fromARGB(200, 39, 12, 12),
             ),
           ],
@@ -222,7 +224,7 @@ class RegisterScreen extends StatelessWidget {
 
   Widget _sigupBottomAtermSection() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 18.h),
       child: Column(
         children: [
           Row(
@@ -239,27 +241,22 @@ class RegisterScreen extends StatelessWidget {
                     children: [
                       SmallText(
                         text: "I agree to the ",
-                        fontsize: 14,
                         color: Colors.grey.shade700,
                       ),
                       SmallText(
                         text: "Terms and Condition ",
-                        fontsize: 14,
                         color: Colors.lightBlueAccent.shade400,
                       ),
                       SmallText(
                         text: "and ",
-                        fontsize: 14,
                         color: Colors.grey.shade700,
                       ),
                       SmallText(
                         text: "Privacy",
-                        fontsize: 14,
                         color: Colors.lightBlueAccent.shade400,
                       ),
                       SmallText(
                         text: " Policy.",
-                        fontsize: 14,
                         color: Colors.lightBlueAccent.shade400,
                       ),
                     ],
@@ -268,30 +265,29 @@ class RegisterScreen extends StatelessWidget {
               
             ],
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 9.h),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 15),
-            height: 40,
+            margin: EdgeInsets.symmetric(horizontal: 13.w),
+            height: 38.h,
             width: double.maxFinite,
             decoration: BoxDecoration(
-              color: Colors.blue.shade300,
-              borderRadius: BorderRadius.circular(10),
+              color: Colors.lightBlue,
+              borderRadius: BorderRadius.circular(8.r),
             ),
             child: Center(
               child: SubTitleText(
                 text: "Sign Up",
-                fontsize: 20,
                 color: AppColours.white,
               ),
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 18.h),
           Center(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 SmallText(text: "Already have an account?"),
-                SizedBox(width: 5,),
+                SizedBox(width: 4.w,),
                 SmallText(text: "Log in", color: Colors.lightBlueAccent.shade400),
               ],
             ),

@@ -1,7 +1,9 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hotel_booking_app/utility/filter_header_delegate.dart';
 import 'package:hotel_booking_app/widgets/app_colours.dart';
-import 'package:hotel_booking_app/widgets/bigtext.dart';
+import 'package:hotel_booking_app/widgets/custom_app_bar.dart';
 import 'package:hotel_booking_app/widgets/custom_divider.dart';
 import 'package:hotel_booking_app/widgets/small_text.dart';
 import 'package:hotel_booking_app/widgets/sub_title_text.dart';
@@ -33,47 +35,31 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
     _pageController.dispose();
   }
 
-  // void _validatePosition(double){
-  //   if ()
-  // }
-
-  // void _updatePosition(int position) {
-  //   setState(() {
-  //     _currentPage = position.toDouble();
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColours.white,
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            toolbarHeight: 40,
-            pinned: true,
-            actionsPadding: EdgeInsets.only(top: 20, bottom: 10),
-            // backgroundColor: Colors.amber,
-            leading: Icon(Icons.arrow_back_ios),
-            title: Bigtext(text: "Luxury king Suite", fontsize: 20),
-          ),
+          SliverPersistentHeader(delegate: FilterHeaderDelegate(child: CustomAppBar(title: "Luxury king Suite"), height: 73.h)),
           SliverList(
             delegate: SliverChildListDelegate([
-              CustomDivider(),
               _imageSection(),
               _descriptionSection(),
-              SizedBox(height: 10,),
+              SizedBox(height: 9.h,),
               _featureSection(),
-              SizedBox(height: 10,),
+              SizedBox(height: 9.h,),
               _priceDetailSection(),
-              SizedBox(height: 10,),
+              SizedBox(height: 9.h,),
               _dateSelectionSection(),
-              SizedBox(height: 10,),
+              SizedBox(height: 9.h,),
               _guestSelectionSection(),
-              SizedBox(height: 10,),
+              SizedBox(height: 9.h,),
               CustomDivider(),
-              SizedBox(height: 10,),
+              SizedBox(height: 9.h,),
               _bookRoomButton(),
-              SizedBox(height: 20,)
+              SizedBox(height: 18.r,)
             ]),
           ),
         ],
@@ -83,13 +69,12 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
 
   Widget _imageSection() {
     return Container(
-      height: 240,
-      margin: EdgeInsets.symmetric(horizontal: 15),
-      // color: Colors.amber,
+      height: 220.h,
+      margin: EdgeInsets.symmetric(horizontal: 12.w),
       child: Column(
         children: [
           SizedBox(
-            height: 210,
+            height: 200.h,
             child: PageView.builder(
               itemCount: 4,
               // if i don't want smooth animation.
@@ -97,26 +82,25 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
               controller: _pageController,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(9.h),
                   child: Stack(
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius: BorderRadius.all(Radius.circular(8.r)),
                         child: Image.asset(
                           "assets/images/room1.avif",
-                          height: 210,
-                          // width: 250,
+                          height: 200.h,
                           width: double.maxFinite,
                           fit: BoxFit.cover,
                         ),
                       ),
                       Positioned(
-                        bottom: 10,
-                        left: 10,
+                        bottom: 9.h,
+                        left: 9.h,
                         child: SmallText(
                           text: "Image 1",
                           color: AppColours.white,
-                          fontsize: 10,
+                          fontsize: 8.sp,
                         ),
                       ),
                     ],
@@ -130,11 +114,11 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
             dotsCount: 4,
             position: _currentPage,
             decorator: DotsDecorator(
-              activeColor: Colors.blue.shade400,
-              size: const Size.square(9.0),
-              activeSize: const Size(18.0, 9.0),
+              activeColor: Colors.lightBlue,
+              size: Size.square(8.0.h),
+              activeSize: Size(12.0.w, 8.0.h),
               activeShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(4.0.r),
               ),
             ),
           ),
@@ -146,26 +130,26 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
   Widget _descriptionSection() {
     return Card(
       color: AppColours.white,
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+      margin: EdgeInsets.symmetric(vertical: 4.h, horizontal: 20.w),
       child: Padding(
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.all(11.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SubTitleText(text: "Luxury King Suite"),
-            SizedBox(height: 5),
+            SizedBox(height: 4.h),
             Row(
               children: [
                 Icon(
                   Icons.star_outline,
                   color: const Color.fromARGB(255, 230, 182, 6),
-                  size: 18,
+                  size: 15.sp,
                 ),
                 SizedBox(width: 5),
-                SmallText(text: "4.8(245 Reviews)", fontsize: 13),
+                SmallText(text: "4.8(245 Reviews)", ),
               ],
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 4.h),
             Wrap(
               children: [
                 SmallText(
@@ -183,7 +167,7 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
   Widget _featureSection() {
     return Card(
       color: AppColours.white,
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+      margin: EdgeInsets.symmetric(vertical: 4.h, horizontal: 23.w),
       child: Padding(
         padding: EdgeInsets.all(12),
         child: Column(
@@ -191,8 +175,7 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
           children: [
             SubTitleText(text: "Room Features"),
             Wrap(
-              spacing: 12,
-              runSpacing: 12,
+              spacing: 10.w,
               children: [
                 _featureBuilder(Icons.bed_outlined, "king Size Bed"),
                 _featureBuilder(Icons.wifi, "Free Wi-fi"),
@@ -210,16 +193,16 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
 
   Widget _featureBuilder(IconData iconData, String text) {
     return SizedBox(
-      width: 150,
+      width: 110.w,
       child: Row(
         children: [
           Icon(
             iconData,
             color: const Color.fromARGB(255, 230, 182, 6),
-            size: 18,
+            size: 13.sp,
           ),
           SizedBox(width: 5),
-          SmallText(text: text, fontsize: 15),
+          SmallText(text: text,),
         ],
       ),
     );
@@ -228,9 +211,9 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
   Widget _priceDetailSection() {
     return Card(
       color: AppColours.white,
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+      margin: EdgeInsets.symmetric(vertical: 4.h, horizontal: 23.w),
       child: Padding(
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.all(11.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -242,7 +225,7 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
                 SmallText(text: "₦15000"),
               ],
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 4.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -250,7 +233,7 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
                 SmallText(text: "₦1500"),
               ],
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 4.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -259,12 +242,12 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
               ],
             ),
             CustomDivider(),
-            SizedBox(height: 5),
+            SizedBox(height: 4.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SubTitleText(text: "Total", color: Colors.blue.shade300),
-                SubTitleText(text: "₦16650.00", color: Colors.blue.shade300),
+                SubTitleText(text: "Total", color: Colors.lightBlue),
+                SubTitleText(text: "₦16650.00", color: Colors.lightBlue),
               ],
             ),
           ],
@@ -276,9 +259,9 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
   Widget _dateSelectionSection() {
     return Card(
       color: AppColours.white,
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+      margin: EdgeInsets.symmetric(vertical: 4.h, horizontal: 24.w),
       child: Padding(
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.all(11.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -289,26 +272,27 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
                   Icons.calendar_month_outlined,
                   color: const Color.fromARGB(255, 230, 182, 6),
                 ),
-                SizedBox(width: 5),
+                SizedBox(width: 4.w),
                 SizedBox(
-                  height: 60,
-                  width: 210,
+                  height: 55.h,
+                  width: 140.w,
                   child: Wrap(
                     children: [
                       SmallText(
                         text: "Jan 1, 2026 - jan 12, 2026",
-                        fontsize: 20,
+                        fontsize: 10.sp,
                       ),
                     ],
                   ),
                 ),
+                SizedBox(width: 7.w),
                 Container(
-                  height: 40,
-                  width: 90,
+                  height: 40.h,
+                  width: 65.w,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 1.5),
+                    border: Border.all(color: Colors.grey.shade200, width: 1.5.w),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.grey.shade200,
+                    color: Colors.grey.shade50,
                   ),
                   child: Center(
                     child: SmallText(
@@ -328,14 +312,14 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
   Widget _guestSelectionSection() {
     return Card(
       color: AppColours.white,
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+      margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 23.w),
       child: Padding(
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.all(10.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SubTitleText(text: "Guests"),
-            SizedBox(height: 15,),
+            SizedBox(height: 14.h,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -343,15 +327,15 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
                 Row(
                   children: [
                     _signBuilder(Icons.remove),
-                    SizedBox(width: 20,),
+                    SizedBox(width: 17.w,),
                     SubTitleText(text: '1'),
-                    SizedBox(width: 20,),
+                    SizedBox(width: 17.w,),
                     _signBuilder(Icons.add),
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 18.h,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -359,9 +343,9 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
                 Row(
                   children: [
                     _signBuilder(Icons.remove),
-                    SizedBox(width: 20,),
+                    SizedBox(width: 15.w,),
                     SubTitleText(text: "0"),
-                    SizedBox(width: 20,),
+                    SizedBox(width: 15.w,),
                     _signBuilder(Icons.add),
                   ],
                 ),
@@ -375,11 +359,11 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
 
   Widget _signBuilder(IconData iconData) {
     return Container(
-      height: 30,
-      width: 30,
+      height: 28.h,
+      width: 23.w,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.blue.shade400, width: 1.7),
-        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.blue.shade400, width: 1.5.w),
+        borderRadius: BorderRadius.circular(10.r),
         color: Colors.grey.shade200,
       ),
       child: Center(child: Icon(iconData, color: Colors.blue.shade400)),
@@ -388,17 +372,16 @@ class _RoomBookingScreenState extends State<RoomBookingScreen> {
 
   Widget _bookRoomButton() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Container(
-        width: 300,
-        height: 30,
+        width: 280.w,
+        height: 38.h,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: 0.5),
-          borderRadius: BorderRadius.all(Radius.circular(5)),
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
           color: Colors.blue.shade400,
         ),
         child: Center(
-          child: SmallText(text: "Book Now - ₦16550", color: AppColours.white, fontsize: 13),
+          child: SubTitleText(text: "Book Now - ₦16550", color: AppColours.white,),
         )
           
       ),

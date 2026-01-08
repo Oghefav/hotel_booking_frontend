@@ -9,7 +9,6 @@ import 'package:hotel_booking_app/utility/filter_header_delegate.dart';
 import 'package:hotel_booking_app/widgets/app_colours.dart';
 import 'package:hotel_booking_app/widgets/bigtext.dart';
 import 'package:hotel_booking_app/widgets/custom_divider.dart';
-import 'package:hotel_booking_app/widgets/icon_text.dart';
 import 'package:hotel_booking_app/widgets/small_text.dart';
 import 'package:hotel_booking_app/widgets/sub_title_text.dart';
 
@@ -112,7 +111,7 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
           children: [
             Icon(iconData, color: Color.fromARGB(190, 37, 37, 37)),
             SizedBox(width: 4.w),
-            IconText(text: text),
+            SmallText(text: text),
           ],
         ),
       ),
@@ -243,7 +242,7 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
                             side: BorderSide(color: AppColours.white),
                           ),
                           backgroundColor: Color.fromARGB(100, 212, 217, 220),
-                          label: IconText(text: features[index]),
+                          label: SmallText(text: features[index]),
                         );
                       }),
                     ),

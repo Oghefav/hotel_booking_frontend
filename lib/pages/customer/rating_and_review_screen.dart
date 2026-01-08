@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hotel_booking_app/widgets/app_colours.dart';
 import 'package:hotel_booking_app/widgets/custom_divider.dart';
 import 'package:hotel_booking_app/widgets/small_text.dart';
@@ -15,7 +16,7 @@ class RatingAndReviewScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 40),
+            SizedBox(height: 38.h),
             _appBarSection(),
             CustomDivider(),
             _ratingAndReviewSection(),
@@ -27,7 +28,7 @@ class RatingAndReviewScreen extends StatelessWidget {
 
   Widget _appBarSection() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical:4.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [SubTitleText(text: "Leave a Review"), Icon(Icons.close)],
@@ -37,12 +38,12 @@ class RatingAndReviewScreen extends StatelessWidget {
 
   Widget _ratingAndReviewSection() {
     return Padding(
-      padding: EdgeInsets.all(25),
+      padding: EdgeInsets.all(23.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SmallText(text: "Overall Hotel Rating"),
-          SizedBox(height: 8,),
+          SizedBox(height: 7.h,),
           Row(
             children: [
               Wrap(
@@ -51,40 +52,39 @@ class RatingAndReviewScreen extends StatelessWidget {
                 }),
               ),
               SmallText(text: "(4)"),
-              SizedBox(width: 5,),
+              SizedBox(width: 4.w,),
               SubTitleText(text: "4.3"),
       
             ],
           ),
-          SizedBox(height: 15,),
+          SizedBox(height: 14.h,),
           SmallText(text: "Your Rating"),
-          SizedBox(height: 7,),
-          Wrap(spacing: 6, children: List.generate(5, (index)=> Icon(Icons.star_outline, color: Colors.grey.shade800, size: 30, )),),
-          SizedBox(height: 15,),
+          SizedBox(height: 6.h,),
+          Wrap(spacing: 4.w, children: List.generate(5, (index)=> Icon(Icons.star_outline, color: Colors.grey.shade800, size: 25.sp, )),),
+          SizedBox(height: 14.h,),
           SmallText(text: "Your Review"),
-          SizedBox(height: 10,),
+          SizedBox(height: 9.h,),
           TextField(
             maxLines: 8,
             decoration: InputDecoration(
             hintText: "Share your experience with us...",
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 2, color: Colors.grey.shade400)
+              borderSide: BorderSide(width: 1.w, color: Colors.grey.shade400)
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 2.0, color: Colors.grey.shade300),
-              borderRadius: BorderRadius.circular(15))
+              borderSide: BorderSide(width: 1.w, color: Colors.grey.shade300),
+              borderRadius: BorderRadius.circular(13.r))
           ),),
-          SizedBox(height: 20,),
+          SizedBox(height: 18.h,),
           Container(
-        width: 400,
-        height: 40,
+        width: 350.w,
+        height: 40.h,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: 0.5),
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          color: Colors.blue.shade400,
+          borderRadius: BorderRadius.all(Radius.circular(5.r)),
+          color: Colors.lightBlue,
         ),
         child: Center(
-          child: SmallText(text: "Submit Review", color: AppColours.white, fontsize: 20),
+          child: SubTitleText(text: "Submit Review", color: AppColours.white,),
         )
           
       ),

@@ -37,6 +37,7 @@ dependencies:
   persistent_bottom_nav_bar: ^6.2.1
   dots_indicator: ^4.0.1
   flutter_screenutil: ^5.9.3
+  get: ^4.7.3
 
 dev_dependencies:
   flutter_test:
