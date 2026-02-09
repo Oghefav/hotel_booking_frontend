@@ -1,15 +1,109 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hotel_booking_app/config/route.dart';
 import 'package:hotel_booking_app/utility/filter_header_delegate.dart';
 import 'package:hotel_booking_app/widgets/app_colours.dart';
 import 'package:hotel_booking_app/widgets/small_text.dart';
 import 'package:hotel_booking_app/widgets/sub_title_text.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends HookWidget {
   const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
+    final lastNameController = useTextEditingController();
+    final firstNameController = useTextEditingController();
+    final phoneNumberController = useTextEditingController();
+    final confirmPasswordController = useTextEditingController();
+
+    final emailFieldErrorMessage = useState<String?>(null);
+    final passwordFieldErrorMessage = useState<String?>(null);
+    final firstNameFieldErrorMessage = useState<String?>(null);
+    final lastNameFieldErrorMessage = useState<String?>(null);
+    final phoneNumberFieldErrorMessage = useState<String?>(null);
+    final confirmPasswordFieldErrorMessage = useState<String?>(null);
+
+    useEffect(() {
+      void listener() {
+        if (emailFieldErrorMessage.value != null) {
+          emailFieldErrorMessage.value = null;
+        }
+      }
+
+      emailController.addListener(listener);
+      return () {
+        emailController.removeListener(listener);
+      };
+    }, [emailController]);
+
+    useEffect(() {
+      void listener() {
+        if (passwordFieldErrorMessage.value != null) {
+          passwordFieldErrorMessage.value = null;
+        }
+      }
+
+      passwordController.addListener(listener);
+      return () {
+        passwordController.removeListener(listener);
+      };
+    }, [passwordController]);
+
+    useEffect(() {
+      void listener() {
+        if (firstNameFieldErrorMessage.value != null) {
+          firstNameFieldErrorMessage.value = null;
+        }
+      }
+
+      firstNameController.addListener(listener);
+      return () {
+        firstNameController.removeListener(listener);
+      };
+    }, [firstNameController]);
+
+    useEffect(() {
+      void listener() {
+        if (lastNameFieldErrorMessage.value != null) {
+          lastNameFieldErrorMessage.value = null;
+        }
+      }
+
+      lastNameController.addListener(listener);
+      return () {
+        lastNameController.removeListener(listener);
+      };
+    }, [lastNameController]);
+
+    useEffect(() {
+      void listener() {
+        if (phoneNumberFieldErrorMessage.value != null) {
+          phoneNumberFieldErrorMessage.value = null;
+        }
+      }
+
+      phoneNumberController.addListener(listener);
+      return () {
+        phoneNumberController.removeListener(listener);
+      };
+    }, [phoneNumberController]);
+
+    useEffect(() {
+      void listener() {
+        if (confirmPasswordFieldErrorMessage.value != null) {
+          confirmPasswordFieldErrorMessage.value = null;
+        }
+      }
+
+      confirmPasswordController.addListener(listener);
+      return () {
+        confirmPasswordController.removeListener(listener);
+      };
+    }, [confirmPasswordController]);
+
     return Scaffold(
       backgroundColor: AppColours.white,
       body: CustomScrollView(
@@ -49,10 +143,17 @@ class RegisterScreen extends StatelessWidget {
 
           SliverList(
             delegate: SliverChildListDelegate([
-              _textFieldSection(),
-              SizedBox(height: 20.h,),
+              _textFieldSection(
+                emailFieldErrorMessage,
+                passwordFieldErrorMessage,
+                firstNameFieldErrorMessage,
+                lastNameFieldErrorMessage,
+                phoneNumberFieldErrorMessage,
+                confirmPasswordFieldErrorMessage,
+              ),
+              SizedBox(height: 20.h),
               _oauthSection(),
-              _sigupBottomAtermSection(),
+              _sigupBottomAtermSection(context),
             ]),
           ),
         ],
@@ -60,7 +161,14 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  Widget _textFieldSection() {
+  Widget _textFieldSection(
+    ValueNotifier<String?> emailFieldErrorMessage,
+    ValueNotifier<String?> passwordFieldErrorMessage,
+    ValueNotifier<String?> firstNameFieldErrorMessage,
+    ValueNotifier<String?> lastNameFieldErrorMessage,
+    ValueNotifier<String?> phoneNumberFieldErrorMessage,
+    ValueNotifier<String?> confirmPasswordFieldErrorMessage,
+  ) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
       child: Column(
@@ -71,18 +179,21 @@ class RegisterScreen extends StatelessWidget {
             labelText: "First Name",
             icon: Icons.person_outline,
           ),
+          _errorTextBuilder(firstNameFieldErrorMessage),
           SizedBox(height: 14.h),
           _textFieldBuilder(
             hintText: "Doe",
             labelText: "Last Name",
             icon: Icons.person_2_outlined,
           ),
+          _errorTextBuilder(lastNameFieldErrorMessage),
           SizedBox(height: 14.h),
           _textFieldBuilder(
             hintText: "johndoe@example.com",
             labelText: "Email",
             icon: Icons.message_outlined,
           ),
+          _errorTextBuilder(emailFieldErrorMessage),
           SizedBox(height: 14.h),
           _textFieldBuilder(
             hintText: "08088173983",
@@ -90,6 +201,7 @@ class RegisterScreen extends StatelessWidget {
             icon: Icons.phone_outlined,
             keyboardtype: TextInputType.phone,
           ),
+          _errorTextBuilder(phoneNumberFieldErrorMessage),
           SizedBox(height: 14.h),
           _textFieldBuilder(
             hintText: "********",
@@ -97,6 +209,7 @@ class RegisterScreen extends StatelessWidget {
             icon: Icons.lock_outline,
             isObscure: true,
           ),
+          _errorTextBuilder(passwordFieldErrorMessage),
           SizedBox(height: 14.h),
           _textFieldBuilder(
             hintText: "********",
@@ -104,6 +217,7 @@ class RegisterScreen extends StatelessWidget {
             icon: Icons.lock_outline,
             isObscure: true,
           ),
+          _errorTextBuilder(confirmPasswordFieldErrorMessage),
         ],
       ),
     );
@@ -147,6 +261,23 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
+  Widget _errorTextBuilder(ValueNotifier error) {
+    if (error.value == null) {
+      return SizedBox.shrink();
+    } else {
+      return Padding(
+        padding: EdgeInsets.only(top: 4.h),
+        child: Row(
+          children: [
+            Icon(Icons.error_outline, color: Colors.redAccent, size: 14.sp),
+            SizedBox(width: 4.w),
+            SmallText(text: error.value.toString(), color: Colors.redAccent),
+          ],
+        ),
+      );
+    }
+  }
+
   Widget _oauthSection() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 13.h),
@@ -158,17 +289,11 @@ class RegisterScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: Container(
-                    height: 1.h,
-                    color: Colors.grey.shade100,
-                  ),
+                  child: Container(height: 1.h, color: Colors.grey.shade100),
                 ),
-                SmallText(text: "  Or sign with  ", ),
+                SmallText(text: "  Or sign up with  "),
                 Expanded(
-                  child: Container(
-                    height: 1.h,
-                    color: Colors.grey.shade100,
-                  ),
+                  child: Container(height: 1.h, color: Colors.grey.shade100),
                 ),
               ],
             ),
@@ -222,7 +347,7 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  Widget _sigupBottomAtermSection() {
+  Widget _sigupBottomAtermSection(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 18.h),
       child: Column(
@@ -231,38 +356,35 @@ class RegisterScreen extends StatelessWidget {
             children: [
               Checkbox(
                 value: false,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  value = value;
+                },
                 fillColor: WidgetStateProperty.all(AppColours.white),
               ),
 
-                 Expanded(
-                   child: Wrap(
-                   
-                    children: [
-                      SmallText(
-                        text: "I agree to the ",
-                        color: Colors.grey.shade700,
-                      ),
-                      SmallText(
-                        text: "Terms and Condition ",
-                        color: Colors.lightBlueAccent.shade400,
-                      ),
-                      SmallText(
-                        text: "and ",
-                        color: Colors.grey.shade700,
-                      ),
-                      SmallText(
-                        text: "Privacy",
-                        color: Colors.lightBlueAccent.shade400,
-                      ),
-                      SmallText(
-                        text: " Policy.",
-                        color: Colors.lightBlueAccent.shade400,
-                      ),
-                    ],
-                                   ),
-                 ),
-              
+              Expanded(
+                child: Wrap(
+                  children: [
+                    SmallText(
+                      text: "I agree to the ",
+                      color: Colors.grey.shade700,
+                    ),
+                    SmallText(
+                      text: "Terms and Condition ",
+                      color: Colors.lightBlueAccent.shade400,
+                    ),
+                    SmallText(text: "and ", color: Colors.grey.shade700),
+                    SmallText(
+                      text: "Privacy",
+                      color: Colors.lightBlueAccent.shade400,
+                    ),
+                    SmallText(
+                      text: " Policy.",
+                      color: Colors.lightBlueAccent.shade400,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
           SizedBox(height: 9.h),
@@ -275,10 +397,7 @@ class RegisterScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.r),
             ),
             child: Center(
-              child: SubTitleText(
-                text: "Sign Up",
-                color: AppColours.white,
-              ),
+              child: SubTitleText(text: "Sign Up", color: AppColours.white),
             ),
           ),
           SizedBox(height: 18.h),
@@ -287,8 +406,14 @@ class RegisterScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SmallText(text: "Already have an account?"),
-                SizedBox(width: 4.w,),
-                SmallText(text: "Log in", color: Colors.lightBlueAccent.shade400),
+                SizedBox(width: 4.w),
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context,AppRoutes.loginPage),
+                  child: SmallText(
+                    text: "Log in",
+                    color: Colors.lightBlueAccent.shade400,
+                  ),
+                ),
               ],
             ),
           ),
@@ -296,4 +421,6 @@ class RegisterScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _onSignup() {}
 }

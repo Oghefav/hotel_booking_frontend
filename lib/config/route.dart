@@ -1,12 +1,13 @@
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:hotel_booking_app/pages/common/login_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:hotel_booking_app/features/auth/presentation/pages/login_screen/login_screen.dart';
 import 'package:hotel_booking_app/pages/customer/booking_confirmation_screen.dart';
 import 'package:hotel_booking_app/pages/customer/check_out_screen.dart';
 import 'package:hotel_booking_app/pages/customer/customer_home_page.dart';
 import 'package:hotel_booking_app/pages/customer/hotel_details_screen.dart';
+import 'package:hotel_booking_app/pages/customer/persistent_nav_bar.dart';
 import 'package:hotel_booking_app/pages/customer/profile_and_booking_screen.dart';
 import 'package:hotel_booking_app/pages/customer/rating_and_review_screen.dart';
-import 'package:hotel_booking_app/pages/customer/register_screen.dart';
+import 'package:hotel_booking_app/features/auth/presentation/pages/register_screen/register_screen.dart';
 import 'package:hotel_booking_app/pages/customer/room_booking_screen.dart';
 
 class AppRoutes {
@@ -21,19 +22,19 @@ class AppRoutes {
   static const String roomBookingPage = '/roomBookingPage';
   static const String loginPage = '/loginPage';
 
-  static final List<GetPage> routes = [
-    GetPage(name: homePage, page: () => CustomerHomePage()),
-    GetPage(
-      name: bookingConfirmationPage,
-      page: () => BookingConfirmationScreen(),
-    ),
-    GetPage(name: checkOutPage, page: () => CheckOutScreen()),
-    GetPage(name: customerHomePage, page: () => CustomerHomePage()),
-    GetPage(name: hotelDetailPage, page: () => HotelDetailsScreen()),
-    GetPage(name: profilePage, page: () => ProfileAndBookingScreen()),
-    GetPage(name: ratingReviewPage, page: () => RatingAndReviewScreen()),
-    GetPage(name: registerPage, page: () => RegisterScreen()),
-    GetPage(name: roomBookingPage, page: () => RoomBookingScreen()),
-    GetPage(name: loginPage, page: () => LoginScreen()),
-  ];
+  // Standard Flutter Route Map
+  static Map<String, WidgetBuilder> getRoutes() {
+    return {
+      bookingConfirmationPage: (context) => const BookingConfirmationScreen(),
+      checkOutPage: (context) => const CheckOutScreen(),
+      homePage: (context) => const PersistentNavBar(),
+      customerHomePage: (context) => const CustomerHomePage(),
+      hotelDetailPage: (context) => const HotelDetailsScreen(),
+      profilePage: (context) => const ProfileAndBookingScreen(),
+      ratingReviewPage: (context) => const RatingAndReviewScreen(),
+      registerPage: (context) => const RegisterScreen(),
+      roomBookingPage: (context) => const RoomBookingScreen(),
+      loginPage: (context) => const LoginScreen(),
+    };
+  }
 }
