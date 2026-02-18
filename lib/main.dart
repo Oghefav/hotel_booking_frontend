@@ -5,7 +5,7 @@ import 'package:hotel_booking_app/config/route.dart';
 import 'package:hotel_booking_app/depencies_injection.dart';
 import 'package:hotel_booking_app/features/auth/presentation/blocs/login/custom_login/login_bloc.dart';
 import 'package:hotel_booking_app/features/auth/presentation/blocs/login/google_login/google_login_bloc.dart';
-import 'package:hotel_booking_app/features/auth/presentation/pages/login_screen/login_screen.dart';
+import 'package:hotel_booking_app/features/auth/presentation/blocs/register/register_bloc.dart';
 
 void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +25,8 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider<LoginBloc>(create: ((context) => sl<LoginBloc>())),
-            BlocProvider<GoogleLoginBloc>(create: ((context) => sl<GoogleLoginBloc>()),)
+            BlocProvider<GoogleLoginBloc>(create: ((context) => sl<GoogleLoginBloc>()),),
+            BlocProvider<RegisterBloc>(create:(context) => sl<RegisterBloc>(),)
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

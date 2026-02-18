@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/utils.dart';
 import 'package:hotel_booking_app/config/route.dart';
+import 'package:hotel_booking_app/features/auth/presentation/blocs/register/register_bloc.dart';
+import 'package:hotel_booking_app/features/auth/presentation/blocs/register/register_event.dart';
+import 'package:hotel_booking_app/features/auth/presentation/blocs/register/register_state.dart';
 import 'package:hotel_booking_app/utility/filter_header_delegate.dart';
 import 'package:hotel_booking_app/widgets/app_colours.dart';
 import 'package:hotel_booking_app/widgets/small_text.dart';
@@ -25,6 +30,136 @@ class RegisterScreen extends HookWidget {
     final lastNameFieldErrorMessage = useState<String?>(null);
     final phoneNumberFieldErrorMessage = useState<String?>(null);
     final confirmPasswordFieldErrorMessage = useState<String?>(null);
+    final passWordFocusNode = useFocusNode();
+    final confirmPasswordFocusNode = useFocusNode();
+    final showPasswordValidation = useState<bool>(false);
+    final passwordMatch = useState<bool>(false);
+    final passwordLengthValid = useState<bool>(false);
+    final passwordUpperCaseValid = useState<bool>(false);
+    final passwordLowerCaseValid = useState<bool>(false);
+    final passwordSpecialCharValid = useState<bool>(false);
+    final passwordNumberValid = useState<bool>(false);
+    final isFormValid = useState<bool>(false);
+    final termsAgreed = useState<bool>(false);
+    final passwordObscured = useState<bool>(true);
+    final confirmPasswordObscured = useState<bool>(true);
+
+    useEffect(() {
+      void listener() {
+        if (termsAgreed.value) {
+          termsAgreed.value = true;
+        } else {
+          termsAgreed.value = false;
+        }
+      }
+    }, [termsAgreed]);
+    useEffect(() {
+      void listener() {
+        passwordObscured.value = !passwordObscured.value;
+      }
+
+      return () {};
+    });
+
+    useEffect((){
+      void listener() {
+        confirmPasswordObscured.value = !confirmPasswordObscured.value;
+      }
+
+      return () {};
+    },[confirmPasswordObscured]);
+    useEffect(() {
+      listener() {
+        passwordMatch.value =
+            confirmPasswordController.text == passwordController.text &&
+                    confirmPasswordController.text.isNotEmpty
+                ? true
+                : false;
+      }
+
+      passwordController.addListener(listener);
+      confirmPasswordController.addListener(listener);
+      return () {
+        passwordController.removeListener(listener);
+        confirmPasswordController.removeListener(listener);
+      };
+    }, [passwordController, confirmPasswordController]);
+
+    useEffect(() {
+      void listener() {
+        passwordNumberValid.value = passwordController.text.contains(
+          RegExp(r'[0-9]'),
+        );
+      }
+
+      passwordController.addListener(listener);
+      return () {
+        passwordController.removeListener(listener);
+      };
+    }, [passwordController]);
+
+    useEffect(() {
+      void listener() {
+        passwordLengthValid.value = passwordController.text.length >= 8;
+      }
+
+      passwordController.addListener(listener);
+      return () {
+        passwordController.removeListener(listener);
+      };
+    }, [passwordController]);
+
+    useEffect(() {
+      void listener() {
+        passwordUpperCaseValid.value = passwordController.text.contains(
+          RegExp(r'[A-Z]'),
+        );
+      }
+
+      passwordController.addListener(listener);
+      return () {
+        passwordController.removeListener(listener);
+      };
+    }, [passwordController]);
+
+    useEffect(() {
+      void listener() {
+        passwordLowerCaseValid.value = passwordController.text.contains(
+          RegExp(r'[a-z]'),
+        );
+      }
+
+      passwordController.addListener(listener);
+      return () {
+        passwordController.removeListener(listener);
+      };
+    }, [passwordController]);
+
+    useEffect(() {
+      void listener() {
+        passwordSpecialCharValid.value = passwordController.text.contains(
+          RegExp(r'[!@#$%^&*(),.?":{}|<>]'),
+        );
+      }
+
+      passwordController.addListener(listener);
+      return () {
+        passwordController.removeListener(listener);
+      };
+    }, [passwordController]);
+    useEffect(() {
+      void focusListener() {
+        showPasswordValidation.value =
+            passWordFocusNode.hasFocus || confirmPasswordFocusNode.hasFocus;
+      }
+
+      passWordFocusNode.addListener(focusListener);
+      confirmPasswordFocusNode.addListener(focusListener);
+      return () {
+        passWordFocusNode.removeListener(focusListener);
+        confirmPasswordFocusNode.removeListener(focusListener);
+      };
+    }, [passWordFocusNode, confirmPasswordFocusNode]);
 
     useEffect(() {
       void listener() {
@@ -38,6 +173,43 @@ class RegisterScreen extends HookWidget {
         emailController.removeListener(listener);
       };
     }, [emailController]);
+
+    useEffect(
+      () {
+        void listener() {
+          isFormValid.value =
+              passwordLengthValid.value &&
+              passwordUpperCaseValid.value &&
+              passwordLowerCaseValid.value &&
+              passwordSpecialCharValid.value &&
+              passwordNumberValid.value  && passwordMatch.value &&
+              emailController.text.isNotEmpty && firstNameController.text.isNotEmpty && lastNameController.text.isNotEmpty && phoneNumberController.text.isNotEmpty && termsAgreed.value
+              ;
+        }
+
+        passwordLengthValid.addListener(listener);
+        passwordUpperCaseValid.addListener(listener);
+        passwordLowerCaseValid.addListener(listener);
+        passwordSpecialCharValid.addListener(listener);
+        passwordNumberValid.addListener(listener);
+
+        return () {
+          passwordLengthValid.removeListener(listener);
+          passwordUpperCaseValid.removeListener(listener);
+          passwordLowerCaseValid.removeListener(listener);
+          passwordSpecialCharValid.removeListener(listener);
+          passwordNumberValid.removeListener(listener);
+        };
+      },
+      [
+        passwordLengthValid,
+        passwordUpperCaseValid,
+        passwordLowerCaseValid,
+        passwordSpecialCharValid,
+        passwordNumberValid,
+        isFormValid
+      ],
+    );
 
     useEffect(() {
       void listener() {
@@ -144,16 +316,31 @@ class RegisterScreen extends HookWidget {
           SliverList(
             delegate: SliverChildListDelegate([
               _textFieldSection(
+                firstNameController,
+                lastNameController,
+                emailController,
+                phoneNumberController,
+                passwordController,
+                confirmPasswordController,
                 emailFieldErrorMessage,
                 passwordFieldErrorMessage,
                 firstNameFieldErrorMessage,
                 lastNameFieldErrorMessage,
                 phoneNumberFieldErrorMessage,
                 confirmPasswordFieldErrorMessage,
+                showPasswordValidation,
+                passwordMatch,
+                passwordLengthValid,
+                passwordUpperCaseValid,
+                passwordLowerCaseValid,
+                passwordSpecialCharValid,
+                passwordNumberValid,
+                passwordObscured,
+                confirmPasswordObscured,
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 10.h),
+              _sigupBottomAtermSection(context, showPasswordValidation, emailFieldErrorMessage, passwordFieldErrorMessage, firstNameFieldErrorMessage, lastNameFieldErrorMessage, phoneNumberFieldErrorMessage, confirmPasswordFieldErrorMessage, firstNameController, lastNameController, emailController, phoneNumberController, passwordController, confirmPasswordController, isFormValid, termsAgreed),
               _oauthSection(),
-              _sigupBottomAtermSection(context),
             ]),
           ),
         ],
@@ -162,12 +349,27 @@ class RegisterScreen extends HookWidget {
   }
 
   Widget _textFieldSection(
+    TextEditingController firstNameController,
+    TextEditingController lastNameController,
+    TextEditingController email,
+    TextEditingController phoneNumber,
+    TextEditingController password,
+    TextEditingController confirmPassword,
     ValueNotifier<String?> emailFieldErrorMessage,
     ValueNotifier<String?> passwordFieldErrorMessage,
     ValueNotifier<String?> firstNameFieldErrorMessage,
     ValueNotifier<String?> lastNameFieldErrorMessage,
     ValueNotifier<String?> phoneNumberFieldErrorMessage,
     ValueNotifier<String?> confirmPasswordFieldErrorMessage,
+    ValueNotifier<bool> showPasswordValidation,
+    ValueNotifier<bool> passwordMatch,
+    ValueNotifier<bool> passwordLengthValid,
+    ValueNotifier<bool> passwordUpperCaseValid,
+    ValueNotifier<bool> passwordLowerCaseValid,
+    ValueNotifier<bool> passwordSpecialCharValid,
+    ValueNotifier<bool> passwordNumberValid,
+    ValueNotifier<bool> passwordObscured,
+    ValueNotifier<bool> confirmPasswordObscured,
   ) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
@@ -178,6 +380,7 @@ class RegisterScreen extends HookWidget {
             hintText: "John ",
             labelText: "First Name",
             icon: Icons.person_outline,
+            controller: firstNameController,
           ),
           _errorTextBuilder(firstNameFieldErrorMessage),
           SizedBox(height: 14.h),
@@ -185,6 +388,7 @@ class RegisterScreen extends HookWidget {
             hintText: "Doe",
             labelText: "Last Name",
             icon: Icons.person_2_outlined,
+            controller: lastNameController,
           ),
           _errorTextBuilder(lastNameFieldErrorMessage),
           SizedBox(height: 14.h),
@@ -192,6 +396,7 @@ class RegisterScreen extends HookWidget {
             hintText: "johndoe@example.com",
             labelText: "Email",
             icon: Icons.message_outlined,
+            controller: email,
           ),
           _errorTextBuilder(emailFieldErrorMessage),
           SizedBox(height: 14.h),
@@ -200,6 +405,7 @@ class RegisterScreen extends HookWidget {
             labelText: "Phone Number",
             icon: Icons.phone_outlined,
             keyboardtype: TextInputType.phone,
+            controller: phoneNumber,
           ),
           _errorTextBuilder(phoneNumberFieldErrorMessage),
           SizedBox(height: 14.h),
@@ -207,19 +413,67 @@ class RegisterScreen extends HookWidget {
             hintText: "********",
             labelText: "Password",
             icon: Icons.lock_outline,
-            isObscure: true,
+            isObscure: passwordObscured,
+            onTap: () => showPasswordValidation.value = true,
+            controller: password,
           ),
+          if (showPasswordValidation.value)
+            _validatorBuilder(
+              text: 'Password must have 8 characters',
+              isValid: passwordLengthValid.value,
+            ),
+          if (showPasswordValidation.value)
+            _validatorBuilder(
+              text: 'Password must have an uppercase letter',
+              isValid: passwordUpperCaseValid.value,
+            ),
+            if (showPasswordValidation.value)
+            _validatorBuilder(
+              text: 'Password must have a lowercase letter',
+              isValid: passwordLowerCaseValid.value,
+            ),
+            if (showPasswordValidation.value)
+            _validatorBuilder(
+              text: 'Password must have a special character',
+              isValid: passwordSpecialCharValid.value,
+            ),
+            if (showPasswordValidation.value)
+            _validatorBuilder(
+              text: 'Password must have a number',
+              isValid: passwordNumberValid.value,
+            ),
           _errorTextBuilder(passwordFieldErrorMessage),
           SizedBox(height: 14.h),
           _textFieldBuilder(
             hintText: "********",
             labelText: "Confirm Password",
             icon: Icons.lock_outline,
-            isObscure: true,
+            isObscure: confirmPasswordObscured,
+            onTap: () => showPasswordValidation.value = true,
+            controller: confirmPassword,
           ),
+          if (showPasswordValidation.value)
+            _validatorBuilder(
+              text: "Passwords match",
+              isValid: passwordMatch.value ? true : false,
+            ),
           _errorTextBuilder(confirmPasswordFieldErrorMessage),
         ],
       ),
+    );
+  }
+
+  Widget _validatorBuilder({required String text, required bool isValid}) {
+    return Row(
+      children: [
+        Icon(
+          isValid ? Icons.check_circle : Icons.cancel_outlined,
+          color: isValid ? Colors.green : Colors.redAccent,
+          size: 14.sp,
+        ),
+        SizedBox(width: 4.w),
+        SmallText(text: text, color: isValid ? Colors.green : Colors.redAccent),
+      ],
     );
   }
 
@@ -227,8 +481,10 @@ class RegisterScreen extends HookWidget {
     required String hintText,
     required String labelText,
     required IconData icon,
-    bool isObscure = false,
+    ValueNotifier<bool>? isObscure,
+    VoidCallback? onTap,
     TextInputType keyboardtype = TextInputType.text,
+    required TextEditingController controller,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,10 +504,24 @@ class RegisterScreen extends HookWidget {
           ),
           child: TextField(
             keyboardType: keyboardtype,
-            obscureText: isObscure,
+            onTap: onTap,
+            controller: controller,
+            obscureText: isObscure != null ? isObscure.value : false,
             decoration: InputDecoration(
               border: InputBorder.none,
               prefixIcon: Icon(icon, color: Colors.grey.shade600),
+              suffixIcon:
+                  isObscure != null 
+                      ? GestureDetector(
+                        onTap: () => isObscure.value = !isObscure.value,
+                        child: Icon(
+                          isObscure.value
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                          color: Colors.grey.shade600,
+                        ),
+                      )
+                      : null,
               hintText: hintText,
               hintStyle: TextStyle(color: Colors.grey.shade500),
             ),
@@ -347,7 +617,7 @@ class RegisterScreen extends HookWidget {
     );
   }
 
-  Widget _sigupBottomAtermSection(BuildContext context) {
+  Widget _sigupBottomAtermSection(BuildContext context, ValueNotifier<bool> showPasswordValidation, ValueNotifier<String?> emailFieldErrorMessage, ValueNotifier<String?> passwordFieldErrorMessage, ValueNotifier<String?> firstNameFieldErrorMessage, ValueNotifier<String?> lastNameFieldErrorMessage, ValueNotifier<String?> phoneNumberFieldErrorMessage, ValueNotifier<String?> confirmPasswordFieldErrorMessage, TextEditingController firstNameController, TextEditingController lastNameController, TextEditingController email, TextEditingController phoneNumber, TextEditingController password, TextEditingController confirmPassword, ValueNotifier isFormValid, ValueNotifier<bool> termsAgreed) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 18.h),
       child: Column(
@@ -355,10 +625,11 @@ class RegisterScreen extends HookWidget {
           Row(
             children: [
               Checkbox(
-                value: false,
+                value: termsAgreed.value,
                 onChanged: (value) {
-                  value = value;
+                  termsAgreed.value = value ?? false;
                 },
+                checkColor: Colors.blueAccent,
                 fillColor: WidgetStateProperty.all(AppColours.white),
               ),
 
@@ -388,17 +659,50 @@ class RegisterScreen extends HookWidget {
             ],
           ),
           SizedBox(height: 9.h),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 13.w),
-            height: 38.h,
-            width: double.maxFinite,
-            decoration: BoxDecoration(
-              color: Colors.lightBlue,
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            child: Center(
-              child: SubTitleText(text: "Sign Up", color: AppColours.white),
-            ),
+          BlocConsumer<RegisterBloc, RegisterState>(
+            listener: (context, state) {
+              if(state is RegisterSuccess) {
+                Navigator.pushNamed(context, AppRoutes.loginPage);
+              }
+              if(state is RegisterError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(state.serverMessage))
+                );
+              }
+            },
+            builder: (context, state) {
+              return GestureDetector(
+                onTap: () => _onSignup(
+                  context,
+                  firstNameController.text,
+                  lastNameController.text,
+                  email.text,
+                  phoneNumber.text,
+                  password.text,
+                  confirmPassword.text,
+                  emailFieldErrorMessage,
+                  passwordFieldErrorMessage,
+                  firstNameFieldErrorMessage,
+                  lastNameFieldErrorMessage,
+                  phoneNumberFieldErrorMessage,
+                  confirmPasswordFieldErrorMessage,
+                  isFormValid,
+                  termsAgreed,
+                ),
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 13.w),
+                  height: 38.h,
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                    color: Colors.lightBlue,
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Center(
+                    child: SubTitleText(text: "Sign Up", color: AppColours.white),
+                  ),
+                ),
+              );
+            }
           ),
           SizedBox(height: 18.h),
           Center(
@@ -408,7 +712,8 @@ class RegisterScreen extends HookWidget {
                 SmallText(text: "Already have an account?"),
                 SizedBox(width: 4.w),
                 GestureDetector(
-                  onTap: () => Navigator.pushNamed(context,AppRoutes.loginPage),
+                  onTap:
+                      () => Navigator.pushNamed(context, AppRoutes.loginPage),
                   child: SmallText(
                     text: "Log in",
                     color: Colors.lightBlueAccent.shade400,
@@ -422,5 +727,52 @@ class RegisterScreen extends HookWidget {
     );
   }
 
-  void _onSignup() {}
+  void _onSignup(
+    BuildContext context,
+    String firstName,
+    String lastName,
+    String email,
+    String phoneNumber,
+    String password,
+    String confirmPassword,
+    ValueNotifier<String?> emailFieldErrorMessage,
+    ValueNotifier<String?> passwordFieldErrorMessage,
+    ValueNotifier<String?> firstNameFieldErrorMessage,
+    ValueNotifier<String?> lastNameFieldErrorMessage,
+    ValueNotifier<String?> phoneNumberFieldErrorMessage,
+    ValueNotifier<String?> confirmPasswordFieldErrorMessage,
+    ValueNotifier isFormValid,
+    ValueNotifier termsAgreed,
+  ) {
+    if (firstName.isEmpty) {
+      firstNameFieldErrorMessage.value = "First name cannot be empty";
+    }
+
+    if (lastName.isEmpty) {
+      lastNameFieldErrorMessage.value = "Last name cannot be empty";
+    }
+    if (email.isEmpty) {
+      emailFieldErrorMessage.value = "Email cannot be empty";
+    }
+    if (GetUtils.isEmail(email) == false) {
+      emailFieldErrorMessage.value = "Please enter a valid email address";
+    }
+    if (phoneNumber.isEmpty) {
+      phoneNumberFieldErrorMessage.value = "Phone number cannot be empty";
+    }
+    if (password.isEmpty) {
+      passwordFieldErrorMessage.value = "Password cannot be empty";
+    }
+
+    if(isFormValid.value == true && termsAgreed.value == true) {
+      BlocProvider.of<RegisterBloc>(context).add(Register(
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phoneNumber: phoneNumber,
+        password: password,
+        confirmPassword: confirmPassword
+      ));
+    }
+  }
 }

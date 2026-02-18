@@ -133,7 +133,7 @@ class LoginScreen extends HookWidget {
     );
   }
 
-  Widget _loginSection(
+ Widget _loginSection(
     TextEditingController emailController,
     TextEditingController passwordController,
     BuildContext context,
