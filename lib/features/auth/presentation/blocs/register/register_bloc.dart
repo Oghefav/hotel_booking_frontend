@@ -34,6 +34,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       } else {
         serverMessage = dioError?.message ?? serverMessage;
       }
+      print(serverMessage);
       emit(RegisterError(serverMessage));
     }
     if (dataState is DataSuccess && dataState.data.isBlank == false) {

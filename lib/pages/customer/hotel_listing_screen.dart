@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hotel_booking_app/dummydata/hotels.dart';
@@ -214,10 +211,10 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
                       children: [
                         Row(
                           children: [
-                            SubTitleText(
-                              text: "₦${hotelList[index].price.toInt()}",
-                              color: Colors.lightBlue
-                            ),
+                            // SubTitleText(
+                            //   text: "₦${hotelList[index].price.toInt()}",
+                            //   color: Colors.lightBlue
+                            // ),
                             SmallText(text: "/night", color: Colors.grey.shade600),
                           ],
                         ),

@@ -1,4 +1,7 @@
-class HotelModel {
+import 'package:equatable/equatable.dart';
+
+class HotelEntity extends Equatable {
+  final String id;
   final String name;
   final String city;
   final String country;
@@ -8,7 +11,8 @@ class HotelModel {
   final String image;
   final String description;
 
-  HotelModel({
+  const HotelEntity({
+    required this.id,
     required this.name,
     required this.city,
     required this.country,
@@ -18,4 +22,9 @@ class HotelModel {
     required this.image,
     required this.description,
   });
+
+  @override
+  List<Object> get props {
+    return [id];
+  }
 }

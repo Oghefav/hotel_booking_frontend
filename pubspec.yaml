@@ -49,6 +49,7 @@ dependencies:
   retrofit: ^4.6.0
   another_flushbar: ^1.12.32
   google_sign_in: ^6.2.1
+  flutter_secure_storage: ^10.0.0
 
 dev_dependencies:
   flutter_test:

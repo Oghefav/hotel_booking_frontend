@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hotel_booking_app/core/resources/data_state.dart';
+import 'package:hotel_booking_app/features/auth/data/data%20source/local/auth_local_datastore.dart';
 import 'package:hotel_booking_app/features/auth/data/data%20source/remote/auth_api_service.dart';
 import 'package:hotel_booking_app/features/auth/data/model/login.dart';
 import 'package:hotel_booking_app/features/auth/data/model/register.dart';
@@ -20,8 +21,9 @@ class AuthRepoImplementation implements AuthRepository {
     clientId:
         '91302144502-iq33d2850ks65a83ja98dj52998umcpa.apps.googleusercontent.com',
   );
+  final AuthLocalDataSource local;
 
-  AuthRepoImplementation(this._authApiService);
+  AuthRepoImplementation(this._authApiService, this.local);
 
   @override
   Future<DataState<UserEntity>> login(LoginParams data) async {
@@ -33,6 +35,9 @@ class AuthRepoImplementation implements AuthRepository {
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         final Map<String, dynamic> userData = httpResponse.data['data']['user'];
         final user = UserModel.fromJson(userData);
+
+        await local.saveToken(httpResponse.data['data']['refresh'], 'refresh');
+        await local.saveToken(httpResponse.data['data']['access'], 'access');
         return DataSuccess(user);
       } else {
         return DataFailed(
@@ -115,7 +120,7 @@ class AuthRepoImplementation implements AuthRepository {
         ),
       );
 
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
+      if (httpResponse.response.statusCode == HttpStatus.created) {
         final Map<String, dynamic> userData = httpResponse.data['data'];
         final user = UserModel.fromJson(userData);
         return DataSuccess(user);
