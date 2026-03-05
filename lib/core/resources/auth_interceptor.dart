@@ -24,7 +24,7 @@ class AuthInterceptor extends Interceptor {
       final refreshToken = await localDataSource.getToken('refresh');
       if (refreshToken != null){
         try{
-          final response = await refreshDio.post('/refresh_token', data: {'refresh_token' : refreshToken});
+          final response = await refreshDio.post('/refresh_token/', data: {'refresh_token' : refreshToken});
           if (response.statusCode == 200){
             final newAccessToken = response.data['access'];
             await localDataSource.saveToken(newAccessToken, 'access');

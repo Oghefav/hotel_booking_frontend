@@ -9,6 +9,7 @@ abstract class FacilityApiService{
 
   @GET('/hotel/hotel/')
   Future<HttpResponse<dynamic>> getHotels(
+    @Query('category') String? category
   );
 
   @GET('/hotel/search_by_location/')

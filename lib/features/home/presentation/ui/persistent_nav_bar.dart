@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hotel_booking_app/pages/customer/customer_home_page.dart';
+import 'package:hotel_booking_app/features/facilities/presentation/ui/favourites.dart';
+import 'package:hotel_booking_app/features/home/presentation/ui/customer_home_page.dart';
 import 'package:hotel_booking_app/pages/customer/hotel_details_screen.dart';
 import 'package:hotel_booking_app/pages/customer/profile_and_booking_screen.dart';
 import 'package:hotel_booking_app/widgets/app_colours.dart';
@@ -29,6 +30,7 @@ class _PersistentNavBarState extends State<PersistentNavBar> {
     return [
       CustomerHomePage(),
       HotelDetailsScreen(),
+      FavouritesScreen(),
       ProfileAndBookingScreen(),
     ];
   }
@@ -50,6 +52,13 @@ class _PersistentNavBarState extends State<PersistentNavBar> {
             PersistentBottomNavBarItem(
                 icon: Icon(Icons.account_balance),
                 title: ("Bookings"),
+                activeColorPrimary: CupertinoColors.activeBlue,
+                inactiveColorPrimary: CupertinoColors.systemGrey,
+                
+            ),
+            PersistentBottomNavBarItem(
+                icon: Icon(Icons.favorite_outline),
+                title: ("Favourites"),
                 activeColorPrimary: CupertinoColors.activeBlue,
                 inactiveColorPrimary: CupertinoColors.systemGrey,
                 

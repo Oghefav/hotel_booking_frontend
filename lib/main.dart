@@ -7,8 +7,9 @@ import 'package:hotel_booking_app/features/auth/presentation/blocs/login/custom_
 import 'package:hotel_booking_app/features/auth/presentation/blocs/login/google_login/google_login_bloc.dart';
 import 'package:hotel_booking_app/features/auth/presentation/blocs/register/register_bloc.dart';
 
+
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await dependenciesInjection();
   runApp(const MyApp());
 }
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider<LoginBloc>(create: ((context) => sl<LoginBloc>())),
             BlocProvider<GoogleLoginBloc>(create: ((context) => sl<GoogleLoginBloc>()),),
-            BlocProvider<RegisterBloc>(create:(context) => sl<RegisterBloc>(),)
+            BlocProvider<RegisterBloc>(create:(context) => sl<RegisterBloc>(),),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

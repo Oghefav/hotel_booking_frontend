@@ -1,0 +1,9 @@
+{
+    "editor.formatOnType": true,
+    "editor.formatOnSave": true,
+    "files.autoSave": "afterDelay",
+    "editor.defaultFormatter": "Dart-Code.flutter",
+    "editor.wordWrap": "on",
+    "editor.formatOnPaste": true,
+    "editor.autoClosingBrackets": "languageDefined"
+}

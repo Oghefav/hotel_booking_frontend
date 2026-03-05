@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 class HotelEntity extends Equatable {
   final String id;
   final String name;
@@ -10,6 +9,7 @@ class HotelEntity extends Equatable {
   final double avgRating;
   final String image;
   final String description;
+  final bool isFavorite;
 
   const HotelEntity({
     required this.id,
@@ -21,10 +21,11 @@ class HotelEntity extends Equatable {
     required this.avgRating,
     required this.image,
     required this.description,
+    this.isFavorite = false
   });
 
   @override
   List<Object> get props {
-    return [id];
+    return [id, name , isFavorite];
   }
 }
